@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Net.Http;
 using System.Threading.Tasks;
 using TestBackEndApi.Infrastructure.Services.Contract;
@@ -19,7 +20,10 @@ namespace TestBackEndApi.Infrastructure.Services.ServiceHandlers
                 var response = await _Client.GetAsync(_uri);
 
                 var result = response.Content.ReadAsStringAsync().Result;
-                return new CepResponse();
+
+                var cepResponse = JsonConvert.DeserializeObject<CepResponse>(result);
+
+                return cepResponse;
             }
             catch (Exception)
             {

@@ -17,7 +17,7 @@ namespace TestBackEndApi.Api.Controllers
         }
 
         [HttpGet]
-        private async Task<IActionResult> Get([FromQuery] GetCepQuery query)
+        public async Task<IActionResult> Get([FromQuery] GetCepQuery query)
         {
             var response = await _mediator.Send(query);
             if (response == null) return NotFound();

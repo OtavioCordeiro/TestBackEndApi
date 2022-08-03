@@ -8,7 +8,7 @@ using TestBackEndApi.Infrastructure.Services.Interfaces;
 
 namespace TestBackEndApi.Domain.Queries.Cep.Get
 {
-    public sealed class GetCepQueryHandler : IRequestHandler<GetCepQuery, GetCepQueryResponse>
+    public class GetCepQueryHandler : IRequestHandler<GetCepQuery, GetCepQueryResponse>
     {
         private readonly IMapper _mapper;
         private readonly IViaCepServiceClient _iViaCepServiceClient;
@@ -41,7 +41,7 @@ namespace TestBackEndApi.Domain.Queries.Cep.Get
                 results.Mensagens.Add(new MensagemResponse() { Mensagem = "Sucesso" });
             }
 
-            return _mapper.Map<GetCepQueryResponse>(results.Mensagens);
+            return _mapper.Map<GetCepQueryResponse>(results);
         }
     }
 }

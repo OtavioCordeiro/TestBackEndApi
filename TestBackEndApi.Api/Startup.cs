@@ -1,4 +1,5 @@
 using AutoMapper;
+using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -9,6 +10,8 @@ using Microsoft.OpenApi.Models;
 using SimpleInjector;
 using System;
 using TestBackEndApi.Domain.Profiles;
+using TestBackEndApi.Infrastructure.Services.Interfaces;
+using TestBackEndApi.Infrastructure.Services.ServiceHandlers;
 
 namespace TestBackEndApi.Api
 {
@@ -26,6 +29,9 @@ namespace TestBackEndApi.Api
 
         public void ConfigureServices(IServiceCollection services)
         {
+            var assembly = AppDomain.CurrentDomain.Load("TestBackEndApi.Domain");
+
+            services.AddMediatR(assembly);
             services.AddControllers();
             services.AddCors();
 
@@ -40,10 +46,12 @@ namespace TestBackEndApi.Api
             var mappingConfig = new MapperConfiguration(mc =>
             {
                 mc.AddProfile(new GetCepQueryResponseProfile());
+                mc.AddProfile(new GetCepQueryRequestProfile());
             });
 
             IMapper mapper = mappingConfig.CreateMapper();
             services.AddSingleton(mapper);
+            services.AddScoped<IViaCepServiceClient, ViaCepServiceClient>();
 
             #endregion IoC
 
@@ -81,8 +89,6 @@ namespace TestBackEndApi.Api
 
             app.UseRouting();
 
-
-
             app.UseAuthorization();
 
 
@@ -90,8 +96,6 @@ namespace TestBackEndApi.Api
             {
                 endpoints.MapControllers();
             });
-
-
         }
     }
 }
