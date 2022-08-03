@@ -1,7 +1,4 @@
 ﻿using AutoMapper;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using TestBackEndApi.Domain.Queries.Cep.Get;
 using TestBackEndApi.Infrastructure.Services.Contract;
 

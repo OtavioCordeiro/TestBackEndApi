@@ -5,11 +5,9 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using SimpleInjector;
 using System;
-using System.Net;
 using TestBackEndApi.Domain.Profiles;
 using TestBackEndApi.Infrastructure.Services.Interfaces;
 using TestBackEndApi.Infrastructure.Services.ServiceHandlers;
@@ -77,13 +75,6 @@ namespace TestBackEndApi.Api
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            if (env.IsDevelopment())
-            {
-                //app.UseDeveloperExceptionPage();
-            }
-
-            //app.UseExceptionHandler();
-
             app.UseHttpsRedirection();
             app.UseSwagger();
 
