@@ -9,6 +9,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using SimpleInjector;
 using System;
+using System.Net;
 using TestBackEndApi.Domain.Profiles;
 using TestBackEndApi.Infrastructure.Services.Interfaces;
 using TestBackEndApi.Infrastructure.Services.ServiceHandlers;
@@ -32,7 +33,10 @@ namespace TestBackEndApi.Api
             var assembly = AppDomain.CurrentDomain.Load("TestBackEndApi.Domain");
 
             services.AddMediatR(assembly);
-            services.AddControllers();
+            services.AddControllers(options =>
+            {
+                options.RespectBrowserAcceptHeader = true;
+            }).AddXmlSerializerFormatters();
             services.AddCors();
 
             services.Configure<ApiBehaviorOptions>(options =>
@@ -75,8 +79,10 @@ namespace TestBackEndApi.Api
         {
             if (env.IsDevelopment())
             {
-                app.UseDeveloperExceptionPage();
+                //app.UseDeveloperExceptionPage();
             }
+
+            //app.UseExceptionHandler();
 
             app.UseHttpsRedirection();
             app.UseSwagger();
